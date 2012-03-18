@@ -14,7 +14,7 @@ using System.Reflection;
 
 namespace ServerPointSystem
 {
-    [APIVersion(1, 10)]
+    [APIVersion(1, 11)]
     public class ServerPointSystem : TerrariaPlugin
     {
         private static string PayLogs = Path.Combine(TShock.SavePath, "PayLogs");
@@ -883,6 +883,7 @@ namespace ServerPointSystem
                         }
                         if ((DateTime.Now - TimeRewardPlayers[i].LastNotify).TotalSeconds > ClaimTime && ClaimTime != 0 && !TimeRewardPlayers[i].notify)
                         {
+                            TimeRewardPlayers[i].LastReward = DateTime.Now;
                             TimeRewardPlayers[i].notify = true;
                             TimeRewardPlayers[i].canclaim = false;
                             TShock.Players[TimeRewardPlayers[i].Index].SendMessage("Reward has expired.", Color.Red);

@@ -15,7 +15,7 @@ using C3Mod;
 
 namespace C3RewardSystem
 {
-    [APIVersion(1, 10)]
+    [APIVersion(1, 11)]
     public class C3RewardSystem : TerrariaPlugin
     {
         private static CEConfigFile CEConfig { get; set; }
@@ -203,12 +203,17 @@ namespace C3RewardSystem
                     if(InPointRange(killerbal, killedbal))
                     {
                         float gain = (killedbal * (100 - ServerPointSystem.ServerPointSystem.DeathToll)/100) + PvPKillReward;
+                        
                         e.Killer.TSPlayer.SendMessage("You gained " + ((int)gain).ToString() + " " + ServerPointSystem.ServerPointSystem.currname + "(s)!", Color.Green);
                         EPREvents.PointOperate(EKiller, (int)gain, PointOperateReason.PVP);
+                        
+                        e.Killed.TSPlayer.SendMessage("You lost " + ((int)gain).ToString() + " " + ServerPointSystem.ServerPointSystem.currname + "(s)!", Color.Green);
+                        EPREvents.PointOperate(EKilled, -((int)gain), PointOperateReason.PVP);
                     }
                 }
             }
         }
+
         public static void OnGameEnd(C3Mod.GameEndArgs e)
         {
             int winnings = 0;
