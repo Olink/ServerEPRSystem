@@ -14,7 +14,7 @@ using System.Reflection;
 
 namespace ServerPointSystem
 {
-    [APIVersion(1, 11)]
+    [APIVersion(1, 12)]
     public class ServerPointSystem : TerrariaPlugin
     {
         private static string PayLogs = Path.Combine(TShock.SavePath, "PayLogs");

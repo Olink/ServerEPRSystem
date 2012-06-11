@@ -32,3 +32,20 @@ C:\Documents and Settings\Namqui\Desktop\Kyrie\Dropbox\Codes and Shit\Tshock deb
 C:\Documents and Settings\Namqui\Desktop\Kyrie\Dropbox\Codes and Shit\Vharonftw\C3RewardSystem\obj\Debug\ResolveAssemblyReference.cache
 C:\Documents and Settings\Namqui\Desktop\Kyrie\Dropbox\Codes and Shit\Vharonftw\C3RewardSystem\obj\Debug\C3RewardSystem.dll
 C:\Documents and Settings\Namqui\Desktop\Kyrie\Dropbox\Codes and Shit\Vharonftw\C3RewardSystem\obj\Debug\C3RewardSystem.pdb
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\C3RewardSystem\bin\Debug\C3RewardSystem.dll
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\C3RewardSystem\bin\Debug\C3RewardSystem.pdb
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\C3RewardSystem\bin\Debug\Community.CsharpSqlite.dll
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\C3RewardSystem\bin\Debug\Community.CsharpSqlite.SQLiteClient.dll
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\C3RewardSystem\bin\Debug\HttpServer.dll
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\C3RewardSystem\bin\Debug\Mono.Data.Sqlite.dll
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\C3RewardSystem\bin\Debug\MySql.Data.dll
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\C3RewardSystem\bin\Debug\MySql.Web.dll
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\C3RewardSystem\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\C3RewardSystem\bin\Debug\ServerPointSystem.dll
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\C3RewardSystem\bin\Debug\TerrariaServer.exe
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\C3RewardSystem\bin\Debug\TShockAPI.dll
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\C3RewardSystem\bin\Debug\Twitchys-C3Mod.dll
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\C3RewardSystem\bin\Debug\ServerPointSystem.pdb
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\C3RewardSystem\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\C3RewardSystem\obj\Debug\C3RewardSystem.dll
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\C3RewardSystem\obj\Debug\C3RewardSystem.pdb

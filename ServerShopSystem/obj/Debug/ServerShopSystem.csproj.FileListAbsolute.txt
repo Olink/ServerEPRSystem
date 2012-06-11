@@ -32,3 +32,21 @@ C:\Documents and Settings\Namqui\Desktop\Kyrie\Dropbox\Codes and Shit\Tshock deb
 C:\Documents and Settings\Namqui\Desktop\Kyrie\Dropbox\Codes and Shit\Vharonftw\ServerShopSystem\obj\Debug\ResolveAssemblyReference.cache
 C:\Documents and Settings\Namqui\Desktop\Kyrie\Dropbox\Codes and Shit\Vharonftw\ServerShopSystem\obj\Debug\ServerShopSystem.dll
 C:\Documents and Settings\Namqui\Desktop\Kyrie\Dropbox\Codes and Shit\Vharonftw\ServerShopSystem\obj\Debug\ServerShopSystem.pdb
+C:\Users\Virus\git\TShock Plugins\Tshock debug\ServerPlugins\ServerShopSystem.dll
+C:\Users\Virus\git\TShock Plugins\Tshock debug\ServerPlugins\ServerShopSystem.pdb
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\ServerShopSystem\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\ServerShopSystem\obj\Debug\ServerShopSystem.dll
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\ServerShopSystem\obj\Debug\ServerShopSystem.pdb
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\ServerShopSystem\bin\Debug\ServerShopSystem.dll
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\ServerShopSystem\bin\Debug\ServerShopSystem.pdb
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\ServerShopSystem\bin\Debug\Community.CsharpSqlite.dll
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\ServerShopSystem\bin\Debug\Community.CsharpSqlite.SQLiteClient.dll
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\ServerShopSystem\bin\Debug\HttpServer.dll
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\ServerShopSystem\bin\Debug\MySql.Data.dll
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\ServerShopSystem\bin\Debug\MySql.Web.dll
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\ServerShopSystem\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\ServerShopSystem\bin\Debug\ServerPointSystem.dll
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\ServerShopSystem\bin\Debug\TerrariaServer.exe
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\ServerShopSystem\bin\Debug\TShockAPI.dll
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\ServerShopSystem\bin\Debug\Mono.Data.Sqlite.dll
+C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\ServerShopSystem\bin\Debug\ServerPointSystem.pdb
