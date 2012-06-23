@@ -238,6 +238,13 @@ namespace C3RewardSystem
                             ServerPointSystem.ServerPointSystem.currname), Color.Green);
                         EPREvents.PointOperate(EKilled, -((int)actual), PointOperateReason.PVP);
                     }
+
+                    string log = string.Format("{0} killed {1}. {0} received {2} {3}(s) and {1} lost {4} {3}(s)",
+                                               e.Killer.PlayerName, e.Killed.PlayerName, killergets,
+                                               ServerPointSystem.ServerPointSystem.currname,
+                                               (e.Killed.TSPlayer.Group.HasPermission("ignoredeathtax") ? 0 : -actual));
+
+                    Log.ConsoleInfo(log);
                 }
             }
         }
