@@ -49,3 +49,17 @@ C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\C3RewardSystem\bin\Debug\Serve
 C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\C3RewardSystem\obj\Debug\ResolveAssemblyReference.cache
 C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\C3RewardSystem\obj\Debug\C3RewardSystem.dll
 C:\Users\Virus\git\TShock Plugins\ServerEPRSystem\C3RewardSystem\obj\Debug\C3RewardSystem.pdb
+C:\Users\Virus\git\ServerEPRSystem\C3RewardSystem\bin\Debug\C3RewardSystem.dll
+C:\Users\Virus\git\ServerEPRSystem\C3RewardSystem\bin\Debug\C3RewardSystem.pdb
+C:\Users\Virus\git\ServerEPRSystem\C3RewardSystem\bin\Debug\HttpServer.dll
+C:\Users\Virus\git\ServerEPRSystem\C3RewardSystem\bin\Debug\Mono.Data.Sqlite.dll
+C:\Users\Virus\git\ServerEPRSystem\C3RewardSystem\bin\Debug\MySql.Data.dll
+C:\Users\Virus\git\ServerEPRSystem\C3RewardSystem\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Virus\git\ServerEPRSystem\C3RewardSystem\bin\Debug\ServerPointSystem.dll
+C:\Users\Virus\git\ServerEPRSystem\C3RewardSystem\bin\Debug\TerrariaServer.exe
+C:\Users\Virus\git\ServerEPRSystem\C3RewardSystem\bin\Debug\TShockAPI.dll
+C:\Users\Virus\git\ServerEPRSystem\C3RewardSystem\bin\Debug\Twitchys-C3Mod.dll
+C:\Users\Virus\git\ServerEPRSystem\C3RewardSystem\bin\Debug\ServerPointSystem.pdb
+C:\Users\Virus\git\ServerEPRSystem\C3RewardSystem\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Virus\git\ServerEPRSystem\C3RewardSystem\obj\Debug\C3RewardSystem.dll
+C:\Users\Virus\git\ServerEPRSystem\C3RewardSystem\obj\Debug\C3RewardSystem.pdb

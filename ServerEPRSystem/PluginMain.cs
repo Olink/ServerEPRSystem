@@ -70,8 +70,21 @@ namespace ServerPointSystem
             EPREvents.OnPointUse += OnPointUse;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             //WorldHooks.SaveWorld += OnSaveWorld;
+            Commands.ChatCommands.Add( new Command("eprreload", Reload, "eprreload"));
         }
         
+        private void Reload( CommandArgs args )
+        {
+            if( File.Exists( EPRConfigPath ) )
+            {
+                EPRConfig = EPRConfigFile.Read(EPRConfigPath);
+            }
+            else
+            {
+                EPRConfig = new EPRConfigFile();
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -212,10 +225,10 @@ namespace ServerPointSystem
         {
             if(!e.Handled)
             {
+                e.Player.Account += e.Amount;
                 string[] EPRLog = new string[1];
                 EPRLog[0] = string.Format("{0}: {1} operation by {2} Reason: {3} Amount: {4}, {2} now has {5} {1}", DateTime.Now.ToString(), currname, e.Player.Username, e.Reason,e.Amount,e.Player.Account);
                 File.AppendAllLines(EPRLogSavePath, EPRLog);
-                e.Player.Account += e.Amount;
                 //e.Player.TSPlayer.SendMessage(string.Format("{0}: {1} operation by {2} Reason: {3} Amount: {4}", DateTime.Now.ToString(), currname, e.Player.Username, e.Reason, e.Amount), Color.Yellow);
                 e.Handled = true;
             }

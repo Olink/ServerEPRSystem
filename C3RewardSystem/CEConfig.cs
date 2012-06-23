@@ -1,16 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Drawing;
-using Terraria;
-using Hooks;
-using TShockAPI;
-using TShockAPI.DB;
-using System.ComponentModel;
-using ServerPointSystem;
-using MySql.Data.MySqlClient;
 using System.IO;
-using System.Text;
 using Newtonsoft.Json;
 
 namespace C3RewardSystem
@@ -23,6 +12,8 @@ namespace C3RewardSystem
         public int CTFReward = 100;
         public int OFReward = 100;
         public int MoE = 100;
+        public float MaxPVPGain = 50;
+        public float PVPDeathToll = 50;
 
         public static CEConfigFile Read(string path)
         {

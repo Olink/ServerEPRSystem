@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Drawing;
 using Terraria;
 using Hooks;
 using TShockAPI;
 using TShockAPI.DB;
 using System.ComponentModel;
 using ServerPointSystem;
-using MySql.Data.MySqlClient;
 using System.IO;
-using System.Text;
 using C3Mod;
 
 namespace C3RewardSystem
@@ -19,28 +16,31 @@ namespace C3RewardSystem
     public class C3RewardSystem : TerrariaPlugin
     {
         private static CEConfigFile CEConfig { get; set; }
-        private static string CEConfigPath { get { return Path.Combine(TShock.SavePath, "ceconfig.json"); } }
-        private static int PointRange = 10;
-        private static int PvPKillReward = 100;
-        private static int TDMReward = 100;
-        private static int CTFReward = 100;
-        private static int OFReward = 100;
-        private static int MoE = 100;
+
+        private static string CEConfigPath
+        {
+            get { return Path.Combine(TShock.SavePath, "ceconfig.json"); }
+        }
+
         private static SqlTableEditor SQLEditor;
         private static SqlTableCreator SQLWriter;
         private static List<CEPlayer> CEPlayers = new List<CEPlayer>();
+
         public override string Name
         {
             get { return "C3RewardSystem"; }
         }
+
         public override string Author
         {
             get { return "Created by Vharonftw"; }
         }
+
         public override string Description
         {
             get { return "PvP Reward System Using C3Mod and ServerEPRSystem"; }
         }
+
         public override Version Version
         {
             get { return Assembly.GetExecutingAssembly().GetName().Version; }
@@ -55,7 +55,9 @@ namespace C3RewardSystem
             ServerHooks.Chat += OnChat;
             C3Mod.C3Events.OnPvPDeath += OnPvPdeath;
             C3Mod.C3Events.OnGameEnd += OnGameEnd;
+            Commands.ChatCommands.Add(new Command("c3rewards", Reload, "c3r"));
         }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -68,6 +70,7 @@ namespace C3RewardSystem
             }
             base.Dispose(disposing);
         }
+
         public C3RewardSystem(Main game)
             : base(game)
         {
@@ -77,15 +80,15 @@ namespace C3RewardSystem
 
         public void OnInitialize()
         {
-            SQLEditor = new SqlTableEditor(TShock.DB, TShock.DB.GetSqlType() == SqlType.Sqlite ? (IQueryBuilder)new SqliteQueryCreator() : new MysqlQueryCreator());
-            SQLWriter = new SqlTableCreator(TShock.DB, TShock.DB.GetSqlType() == SqlType.Sqlite ? (IQueryBuilder)new SqliteQueryCreator() : new MysqlQueryCreator());
+            SQLEditor = new SqlTableEditor(TShock.DB,
+                                           TShock.DB.GetSqlType() == SqlType.Sqlite
+                                               ? (IQueryBuilder) new SqliteQueryCreator()
+                                               : new MysqlQueryCreator());
+            SQLWriter = new SqlTableCreator(TShock.DB,
+                                            TShock.DB.GetSqlType() == SqlType.Sqlite
+                                                ? (IQueryBuilder) new SqliteQueryCreator()
+                                                : new MysqlQueryCreator());
             SetupConfig();
-            PointRange = CEConfig.PointRange;
-            PvPKillReward = CEConfig.PvPKillReward;
-            TDMReward = CEConfig.TDMReward;
-            CTFReward = CEConfig.CTFReward;
-            OFReward = CEConfig.OFReward;
-            MoE = CEConfig.MoE;
             Commands.ChatCommands.Add(new Command("duel", Bet, "bet"));
         }
 
@@ -121,12 +124,18 @@ namespace C3RewardSystem
                 TSPlayer challenger = TShock.Players[ply];
                 if (challenger.IsLoggedIn && challenged.IsLoggedIn)
                 {
-                    int challengerbal = ServerPointSystem.ServerPointSystem.GetEPRPlayerByIndex(challenger.Index).DisplayAccount;
+                    int challengerbal =
+                        ServerPointSystem.ServerPointSystem.GetEPRPlayerByIndex(challenger.Index).DisplayAccount;
                     if (challengerbal >= GetCEPlayer(ply).Bet)
                     {
                         GetCEPlayer(ply).challenged = challenged.Index;
-                        challenger.SendMessage("You challenged " + challenged.Name + " to a duel for " + GetCEPlayer(ply).Bet.ToString() + " " + ServerPointSystem.ServerPointSystem.currname + "s", Color.Teal);
-                        challenger.SendMessage(challenger.Name + " has  challenged you" + challenged.Name + " to a duel for " + GetCEPlayer(ply).Bet.ToString() + " " + ServerPointSystem.ServerPointSystem.currname + "s", Color.Teal);
+                        challenger.SendMessage(
+                            "You challenged " + challenged.Name + " to a duel for " + GetCEPlayer(ply).Bet.ToString() +
+                            " " + ServerPointSystem.ServerPointSystem.currname + "s", Color.Teal);
+                        challenger.SendMessage(
+                            challenger.Name + " has  challenged you" + challenged.Name + " to a duel for " +
+                            GetCEPlayer(ply).Bet.ToString() + " " + ServerPointSystem.ServerPointSystem.currname + "s",
+                            Color.Teal);
                         foreach (CEPlayer ceplayerctr in WhoChallengedThisGuy(challenged.Index))
                         {
                             if (ceplayerctr.ID != ply)
@@ -136,7 +145,9 @@ namespace C3RewardSystem
                     else
                     {
                         e.Handled = true;
-                        challenger.SendMessage("You don't have enough " + ServerPointSystem.ServerPointSystem.currname + "s to do that! Lower your bet", Color.Red);
+                        challenger.SendMessage(
+                            "You don't have enough " + ServerPointSystem.ServerPointSystem.currname +
+                            "s to do that! Lower your bet", Color.Red);
                     }
                 }
                 return;
@@ -147,8 +158,8 @@ namespace C3RewardSystem
                 {
                     TSPlayer challenger = TShock.Players[WhoChallengedThisGuy(ply)[0].ID];
                     TSPlayer challenged = TShock.Players[ply];
-                    EPRPlayer Echallenger =ServerPointSystem.ServerPointSystem.GetEPRPlayerByIndex(challenger.Index);
-                    EPRPlayer Echallenged =ServerPointSystem.ServerPointSystem.GetEPRPlayerByIndex(challenged.Index);
+                    EPRPlayer Echallenger = ServerPointSystem.ServerPointSystem.GetEPRPlayerByIndex(challenger.Index);
+                    EPRPlayer Echallenged = ServerPointSystem.ServerPointSystem.GetEPRPlayerByIndex(challenged.Index);
                     if (challenger.IsLoggedIn && challenged.IsLoggedIn)
                     {
                         int challengerbal = Echallenger.DisplayAccount;
@@ -164,8 +175,12 @@ namespace C3RewardSystem
                         }
                         else
                         {
-                            challenger.SendMessage("Error processing dueling bets. Either you or your opponent does not have enough " + ServerPointSystem.ServerPointSystem.currname + "s", Color.Red);
-                            challenged.SendMessage("Error processing dueling bets. Either you or your opponent does not have enough " + ServerPointSystem.ServerPointSystem.currname + "s", Color.Red);
+                            challenger.SendMessage(
+                                "Error processing dueling bets. Either you or your opponent does not have enough " +
+                                ServerPointSystem.ServerPointSystem.currname + "s", Color.Red);
+                            challenged.SendMessage(
+                                "Error processing dueling bets. Either you or your opponent does not have enough " +
+                                ServerPointSystem.ServerPointSystem.currname + "s", Color.Red);
                             e.Handled = true;
                         }
                     }
@@ -179,36 +194,49 @@ namespace C3RewardSystem
         {
             if (args.Player.IsLoggedIn)
             {
-                if(args.Parameters.Count>0)
+                if (args.Parameters.Count > 0)
                 {
                     int bet = 0;
                     Int32.TryParse(args.Parameters[0], out bet);
                     GetCEPlayer(args.Player.Index).Bet = bet;
-                    args.Player.SendMessage("You wagered " + bet.ToString() + ServerPointSystem.ServerPointSystem.currname + "s", Color.Red);
+                    args.Player.SendMessage(
+                        "You wagered " + bet.ToString() + ServerPointSystem.ServerPointSystem.currname + "s", Color.Red);
                 }
             }
             else
                 args.Player.SendMessage("You must be logged in to do that!", Color.Red);
         }
+
         private static void OnPvPdeath(C3Mod.DeathArgs e)
         {
             if (e.PvPKill)
             {
-                if( e.Killer.TSPlayer.IsLoggedIn && e.Killed.TSPlayer.IsLoggedIn)
+                if (e.Killer.TSPlayer.IsLoggedIn && e.Killed.TSPlayer.IsLoggedIn)
                 {
                     EPRPlayer EKiller = ServerPointSystem.ServerPointSystem.GetEPRPlayerByIndex(e.Killer.TSPlayer.Index);
                     EPRPlayer EKilled = ServerPointSystem.ServerPointSystem.GetEPRPlayerByIndex(e.Killed.TSPlayer.Index);
+
                     int killerbal = EKiller.DisplayAccount;
+
                     int killedbal = EKilled.DisplayAccount;
-                    if(InPointRange(killerbal, killedbal))
+
+                    float gain = (killedbal*((100f - CEConfig.PVPDeathToll)/100f));
+                    float max = (killerbal*((100f - CEConfig.MaxPVPGain)/100f));
+
+                    int actual = (int) Math.Min(gain, max);
+
+                    int killergets = actual + CEConfig.PvPKillReward;
+
+                    e.Killer.TSPlayer.SendMessage(String.Format("You gained {0} {1}(s)!", (killergets),
+                        ServerPointSystem.ServerPointSystem.currname), Color.Green);
+
+                    EPREvents.PointOperate(EKiller, killergets, PointOperateReason.PVP);
+
+                    if (!e.Killed.TSPlayer.Group.HasPermission("ignoredeathtax"))
                     {
-                        float gain = (killedbal * (100 - ServerPointSystem.ServerPointSystem.DeathToll)/100) + PvPKillReward;
-                        
-                        e.Killer.TSPlayer.SendMessage("You gained " + ((int)gain).ToString() + " " + ServerPointSystem.ServerPointSystem.currname + "(s)!", Color.Green);
-                        EPREvents.PointOperate(EKiller, (int)gain, PointOperateReason.PVP);
-                        
-                        e.Killed.TSPlayer.SendMessage("You lost " + ((int)gain).ToString() + " " + ServerPointSystem.ServerPointSystem.currname + "(s)!", Color.Green);
-                        EPREvents.PointOperate(EKilled, -((int)gain), PointOperateReason.PVP);
+                        e.Killed.TSPlayer.SendMessage(String.Format("You lost {0} {1}(s)!", actual,
+                            ServerPointSystem.ServerPointSystem.currname), Color.Green);
+                        EPREvents.PointOperate(EKilled, -((int)actual), PointOperateReason.PVP);
                     }
                 }
             }
@@ -222,22 +250,22 @@ namespace C3RewardSystem
                 case "tdm":
                     {
                         int multiplier = e.WinningTeamScore - e.LosingTeamScore;
-                        winnings = TDMReward * multiplier;
+                        winnings = CEConfig.TDMReward*multiplier;
                         break;
                     }
                 case "ctf":
                     {
-                        winnings = CTFReward;
+                        winnings = CEConfig.CTFReward;
                         break;
                     }
                 case "1v1":
                     {
-                        winnings = GetCEPlayer(e.WinningTeamPlayers[0].TSPlayer.Index).DuelReward * 2;
+                        winnings = GetCEPlayer(e.WinningTeamPlayers[0].TSPlayer.Index).DuelReward*2;
                         break;
                     }
                 case "oneflag":
                     {
-                        winnings = OFReward;
+                        winnings = CEConfig.OFReward;
                         break;
                     }
             }
@@ -245,18 +273,25 @@ namespace C3RewardSystem
             {
                 if (player.TSPlayer.IsLoggedIn)
                 {
-                    EPREvents.PointOperate(ServerPointSystem.ServerPointSystem.GetEPRPlayerByIndex(player.Index),winnings,PointOperateReason.PVPEvent);
-                    player.TSPlayer.SendMessage("You gained " + winnings.ToString() + " " + ServerPointSystem.ServerPointSystem.currname + "s!", Color.Green);
+                    EPREvents.PointOperate(ServerPointSystem.ServerPointSystem.GetEPRPlayerByIndex(player.Index),
+                                           winnings, PointOperateReason.PVPEvent);
+                    player.TSPlayer.SendMessage(
+                        "You gained " + winnings.ToString() + " " + ServerPointSystem.ServerPointSystem.currname + "s!",
+                        Color.Green);
                 }
             }
         }
+
         private static bool InPointRange(int killerbal, int killedbal)
         {
-            if (killerbal <= ((killedbal + MoE) * PointRange) && killedbal <= ((killerbal + MoE) * PointRange))
+            //  100             101 + 100 * 10 = 2010                       101         100 + 100 * 10 = 2000
+            if (killerbal <= ((killedbal + CEConfig.MoE)*CEConfig.PointRange) &&
+                killedbal <= ((killerbal + CEConfig.MoE)*CEConfig.PointRange))
                 return true;
             else
                 return false;
         }
+
         private static CEPlayer GetCEPlayer(int ply)
         {
             CEPlayer ceplayer = new CEPlayer();
@@ -265,6 +300,7 @@ namespace C3RewardSystem
                     ceplayer = ceplayerctr;
             return ceplayer;
         }
+
         private static List<CEPlayer> WhoChallengedThisGuy(int ply)
         {
             List<CEPlayer> ListOfPplWCTG = new List<CEPlayer>();
@@ -275,13 +311,14 @@ namespace C3RewardSystem
             }
             return ListOfPplWCTG;
         }
+
         private static void SetupConfig()
         {
             try
             {
                 if (File.Exists(CEConfigPath))
                 {
-                    CEConfig =CEConfigFile.Read(CEConfigPath);
+                    CEConfig = CEConfigFile.Read(CEConfigPath);
                     // Add all the missing config properties in the json file
                 }
                 CEConfig.Write(CEConfigPath);
@@ -295,6 +332,23 @@ namespace C3RewardSystem
                 Log.Error(ex.ToString());
             }
         }
-    }
 
+        private void Reload(CommandArgs args)
+        {
+            if (File.Exists(CEConfigPath))
+            {
+                CEConfig = CEConfigFile.Read(CEConfigPath);
+                // Add all the missing config properties in the json file
+            }
+            else
+            {
+                CEConfig.Write(CEConfigPath);
+                if (File.Exists(CEConfigPath))
+                {
+                    CEConfig = CEConfigFile.Read(CEConfigPath);
+                    // Add all the missing config properties in the json file
+                }
+            }
+        }
+    }
 }
