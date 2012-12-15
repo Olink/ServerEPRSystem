@@ -192,6 +192,10 @@ namespace C3RewardSystem
 
         private static void Bet(CommandArgs args)
         {
+            if(!CEConfig.EnableBet)
+            {
+                args.Player.SendErrorMessage("Sadly, your server administrator has disabled this functionality.");
+            }
             if (args.Player.IsLoggedIn)
             {
                 if (args.Parameters.Count > 0)

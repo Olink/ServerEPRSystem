@@ -14,6 +14,7 @@ namespace C3RewardSystem
         public int MoE = 100;
         public float MaxPVPGain = 50;
         public float PVPDeathToll = 50;
+        public bool EnableBet = true;
 
         public static CEConfigFile Read(string path)
         {

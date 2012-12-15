@@ -69,6 +69,7 @@ namespace ServerPointSystem
             EPREvents.OnPointPay += OnPointPay;
             EPREvents.OnPointUse += OnPointUse;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            TShockAPI.Hooks.PlayerHooks.PlayerLogin += OnLogin;
             //WorldHooks.SaveWorld += OnSaveWorld;
             Commands.ChatCommands.Add( new Command("eprreload", Reload, "eprreload"));
         }
@@ -100,6 +101,7 @@ namespace ServerPointSystem
                 EPREvents.OnPointPay -= OnPointPay;
                 EPREvents.OnPointUse -= OnPointUse;
                 AppDomain.CurrentDomain.UnhandledException -= CurrentDomain_UnhandledException;
+                TShockAPI.Hooks.PlayerHooks.PlayerLogin -= OnLogin;
                 //WorldHooks.SaveWorld -= OnSaveWorld;
             }
             base.Dispose(disposing);
@@ -951,10 +953,76 @@ namespace ServerPointSystem
             }
         }
 
+        public void OnLogin(TShockAPI.Hooks.PlayerLoginEventArgs args)
+        {
+            TSPlayer ply = args.Player;
+
+            if (args.Player.IsLoggedIn)
+            {
+                bool PlayerHasAnSPAccount = false;
+                int count = SQLEditor.ReadColumn("ServerPointAccounts", "ID", new List<SqlValue>()).Count;
+                object[] ServerPointAccounts = new object[count];
+                SQLEditor.ReadColumn("ServerPointAccounts", "name", new List<SqlValue>()).CopyTo(ServerPointAccounts);
+                for (int i = 0; i < count; i++)
+                {
+                    if (args.Player.UserAccountName == ServerPointAccounts[i].ToString())
+                    {
+                        EPRPlayer player = GetEPRPlayerByIndex(args.Player.Index);
+                        if (player.Username != "" && player.AccountEnable)
+                        {
+                            List<SqlValue> where = new List<SqlValue>();
+                            where.Add(new SqlValue("name", "'" + player.Username + "'"));
+                            List<SqlValue> values = new List<SqlValue>();
+                            values.Add(new SqlValue("amount", player.Account));
+                            SQLEditor.UpdateValues("ServerPointAccounts", values, where);
+                        }
+                        player.Username = args.Player.UserAccountName;
+                        player.AccountEnable = true;
+                        player.Account = 0;
+                        List<SqlValue> where2 = new List<SqlValue>();
+                        where2.Add(new SqlValue("name", "'" + args.Player.UserAccountName.ToString() + "'"));
+                        if (SQLEditor.ReadColumn("ServerPointAccounts", "amount", where2).Count > 0)
+                        {
+                            player.Account = int.Parse(SQLEditor.ReadColumn("ServerPointAccounts", "amount", where2)[0].ToString());
+                        }
+                        PlayerHasAnSPAccount = true;
+                        break;
+                    }
+                }
+                if (!PlayerHasAnSPAccount)
+                {
+                    int defaultbal = 0;
+                    List<SqlValue> list = new List<SqlValue>();
+                    list.Add(new SqlValue("name", "'" + args.Player.UserAccountName.ToString() + "'"));
+                    list.Add(new SqlValue("amount", defaultbal));
+                    SQLEditor.InsertValues("ServerPointAccounts", list);
+                    EPRPlayer player = GetEPRPlayerByIndex(args.Player.Index);
+                    if (player.Username != "" && player.AccountEnable)
+                    {
+                        List<SqlValue> where = new List<SqlValue>();
+                        where.Add(new SqlValue("name", "'" + player.Username + "'"));
+                        List<SqlValue> values = new List<SqlValue>();
+                        values.Add(new SqlValue("amount", player.Account));
+                        SQLEditor.UpdateValues("ServerPointAccounts", values, where);
+                    }
+                    player.Username = args.Player.UserAccountName;
+                    player.AccountEnable = true;
+                    player.Account = 0;
+                    args.Player.SendMessage("A pouch was created for this account. You can now start accumulating " + currname + "s!", Color.Green);
+                }
+
+                for (int i = 0; i < TimeRewardPlayers.Count; i++)
+                {
+                    if (args.Player.Index == TimeRewardPlayers[i].Index)
+                        TimeRewardPlayers[i].LastReward = DateTime.Now;
+                }
+            }
+        }
+
         public void OnChat(messageBuffer msg, int ply, string text, HandledEventArgs e)
         {
             string firstword = text.Split(' ')[0];
-            if (firstword == "/login")
+            /*if (firstword == "/login")
             {
                 if (TShock.Players[ply].IsLoggedIn)
                 {
@@ -1035,7 +1103,7 @@ namespace ServerPointSystem
                             TimeRewardPlayers[i].LastReward = DateTime.Now;
                     }
                 }
-            }
+            }*/
         }
         
         public static EPRPlayer GetEPRPlayerByIndex(int index)
