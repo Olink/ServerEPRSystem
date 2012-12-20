@@ -175,7 +175,7 @@ namespace ServerPointSystem
                         var direction = reader.ReadByte();
                         var damage = reader.ReadInt16();
                         var pvp = reader.ReadBoolean();
-                        if (TShock.Players[e.Msg.whoAmI].IsLoggedIn)
+                        if (TShock.Players[e.Msg.whoAmI].IsLoggedIn && !pvp)
                         {
                             EPRPlayer player =  GetEPRPlayerByIndex(e.Msg.whoAmI);
                             int prevbal = player.Account;
